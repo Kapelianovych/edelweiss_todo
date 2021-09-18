@@ -52,6 +52,7 @@
 	cursor: pointer;
 	transition: color 0.2s;
 	text-align: start;
+	font-family: inherit;
 }
 
 .reset-button:hover {

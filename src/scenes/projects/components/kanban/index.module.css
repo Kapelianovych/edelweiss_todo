@@ -1,0 +1,9 @@
+.kanban-block {
+	padding: 0 2rem;
+}
+
+.kanban-content {
+	display: grid;
+	grid: auto / 1fr 1fr 1fr;
+	gap: 1rem;
+}

@@ -4,29 +4,50 @@ import { kanban } from './components/kanban';
 import { creation } from './components/creation';
 import { AppState, appStore, Project } from '../../store';
 
+import styles from './index.module.css';
+
 export const projects = () => {
 	const appState = data(appStore.state);
 	const projectsData = data(appStore.projects);
-	const choosenProject = data<Project | null>(null);
+	const searchProject = data('');
+	const chosenProject = data<Project | null>(null);
+	const searchedProjects = data<readonly Project[]>([]);
 
 	const unsubscribeFromState = appStore.on('state')(appState);
 	const unsubscribeFromProject = appStore.on('projects')(projectsData);
 
 	const projectToButton = (project: Project) =>
 		html`
-			<button @click=${() => choosenProject(project)}>${project.name}</button>
+			<button
+				class="${styles['search-result-item']}"
+				@click=${() => {
+					chosenProject(project);
+					searchProject('');
+					appStore.state = AppState.USING;
+				}}
+			>
+				${project.name}
+			</button>
 		`;
 
 	effect(() => {
 		const projectsList = projectsData();
-		const currentProject = untrack(choosenProject);
+		const currentProject = untrack(chosenProject);
 
 		if (currentProject !== null) {
-			choosenProject(
+			chosenProject(
 				projectsList.find(({ id }) => id === currentProject.id) ?? null,
 			);
 		}
 	});
+
+	effect(() =>
+		searchedProjects(
+			projectsData().filter((project) =>
+				project.name.toLowerCase().includes(searchProject().toLowerCase()),
+			),
+		),
+	);
 
 	return html`
 		<div
@@ -34,28 +55,57 @@ export const projects = () => {
 				unsubscribeFromState();
 				unsubscribeFromProject();
 			}}
+			class="${styles['main-section']}"
 		>
-			<header>
-				<div>
-					<input type="search" placeholder="search" />
-					<div>
-						<div>${() => projectsData().map(projectToButton)}</div>
+			<header class="${styles['projects-header']}">
+				<div class="${styles['search-project-wrapper']}">
+					<input
+						type="search"
+						.value=${searchProject}
+						placeholder="Search"
+						class="${styles['search-field']}"
+						@input=${(event: InputEvent) =>
+							searchProject((event.target as HTMLInputElement).value)}
+					/>
+					<div
+						class="${styles['search-results-block']} ${() =>
+							searchProject().length > 0 && searchedProjects().length > 0
+								? styles['visible']
+								: ''}"
+					>
+						${() => searchedProjects().map(projectToButton)}
 					</div>
 				</div>
 
-				<button @click=${() => (appStore.state = AppState.CREATION)}>
+				<button
+					class="${styles['create-project-button']}"
+					@click=${() => (appStore.state = AppState.CREATION)}
+				>
 					Create
 				</button>
 			</header>
 			<main>
-				${() =>
-					projectsData().length > 0
-						? choosenProject() !== null
-							? kanban(choosenProject()!)
-							: html`Choose existing project or create one.`
-						: appState() === AppState.CREATION
+				${() => {
+					const state = appState();
+					const projects = projectsData();
+					const currentProject = chosenProject();
+
+					return state === AppState.CREATION
 						? creation
-						: html`<h1>There aren't any projects yet.</h1>`}
+						: projects.length > 0
+						? currentProject !== null
+							? kanban(currentProject)
+							: html`
+									<p class="${styles['default-message']}">
+										Choose existing project or create one.
+									</p>
+							  `
+						: html`
+								<p class="${styles['default-message']}">
+									There aren't any projects yet.
+								</p>
+						  `;
+				}}
 			</main>
 		</div>
 	`;

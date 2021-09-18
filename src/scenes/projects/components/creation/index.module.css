@@ -1,0 +1,32 @@
+.creation-project-block {
+	width: 30rem;
+	margin: 3rem auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.creation-field {
+	padding: 0.3rem 0.5rem;
+	background-color: transparent;
+	font-size: inherit;
+	font-family: inherit;
+	border: none;
+	border-bottom: 1px solid var(--secondary-color);
+	margin-bottom: 1rem;
+}
+
+.creation-button {
+	border: none;
+	background-color: var(--primary-color);
+	color: rgb(var(--fifth-alpha-color) / 0.7);
+	cursor: pointer;
+	font-size: inherit;
+	font-family: inherit;
+	border-radius: 5px;
+	transition: color 0.2s;
+}
+
+.creation-button:hover {
+	color: var(--fifth-color);
+}

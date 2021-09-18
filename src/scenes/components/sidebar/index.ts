@@ -1,5 +1,7 @@
 import { html } from '@prostory/edelweiss';
 
+import { AppState, appStore } from '../../../store';
+
 import styles from './index.module.css';
 
 export const sidebar = html`
@@ -12,6 +14,14 @@ export const sidebar = html`
 				<route-link href="/calendar">Calendar</route-link>
 			</nav>
 		</div>
-		<button class="${styles['reset-button']}">Clear all data</button>
+		<button
+			@click=${() => {
+				appStore.projects = [];
+				appStore.state = AppState.USING;
+			}}
+			class="${styles['reset-button']}"
+		>
+			Clear all data
+		</button>
 	</div>
 `;

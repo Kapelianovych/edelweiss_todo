@@ -1,0 +1,67 @@
+.main-section {
+	flex: 1;
+	height: 100vh;
+	overflow-y: auto;
+}
+
+.projects-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.5rem 2rem;
+}
+
+.search-project-wrapper {
+	position: relative;
+}
+
+.search-field {
+	background-color: transparent;
+	font-size: inherit;
+	border: none;
+}
+
+.search-results-block {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	left: 0;
+	width: 30rem;
+	visibility: hidden;
+	opacity: 0;
+	padding: 0.4rem 0.6rem;
+	background-color: var(--primary-color);
+	border-radius: 5px;
+}
+
+.search-results-block.visible {
+	visibility: visible;
+	opacity: 1;
+}
+
+.search-result-item {
+	background-color: var(--third-color);
+	color: var(--secondary-color);
+	border: none;
+	font-size: inherit;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.create-project-button {
+	background-color: transparent;
+	border: none;
+	color: rgb(var(--fifth-alpha-color) / 0.5);
+	font-size: inherit;
+	cursor: pointer;
+	font-family: inherit;
+	transition: color 0.2s;
+}
+
+.create-project-button:hover {
+	color: var(--fifth-color);
+}
+
+.default-message {
+	color: var(--fifth-color);
+	text-align: center;
+}
