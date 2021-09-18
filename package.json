@@ -1,0 +1,23 @@
+{
+	"name": "edelweiss-todo",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"clean": "rimraf dist",
+		"prestart": "npm run clean",
+		"start": "parcel serve ./src/index.html",
+		"prebuild": "npm run clean",
+		"build": "parcel build ./src/index.html"
+	},
+	"dependencies": {
+		"@prostory/edelweiss": "^2.0.0-alpha.9"
+	},
+	"devDependencies": {
+		"parcel": "2.0.0-rc.0",
+		"prettier": "^2.4.1",
+		"rimraf": "^3.0.2",
+		"tslib": "^2.3.1",
+		"typescript": "^4.4.3",
+		"typescript-plugin-css-modules": "^3.4.0"
+	}
+}
