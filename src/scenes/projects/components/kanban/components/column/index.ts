@@ -1,43 +1,12 @@
 import { html } from '@prostory/edelweiss';
 
-import {
-	ToDo,
-	ToDoState,
-	createToDo,
-	updateToDo,
-} from '../../../../../../store';
+import { cell } from './components/cell';
+import { ToDo, ToDoState, createToDo } from '../../../../../../store';
 
 import styles from './index.module.css';
 
 const capitalize = (word: string) =>
 	word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-
-const cell =
-	(projectId: string) =>
-	({ id, title, text }: ToDo) =>
-		html`
-			<div class="${styles['cell-block']}">
-				<input
-					class="${styles['task-field']} ${styles['task-title']}"
-					@change=${(event: InputEvent) =>
-						updateToDo(projectId, id, {
-							title: (event.target as HTMLInputElement).value,
-						})}
-					type="text"
-					.value=${title}
-					placeholder="Title"
-				/>
-				<textarea
-					class="${styles['task-field']} ${styles['task-text']}"
-					@change=${(event: InputEvent) =>
-						updateToDo(projectId, id, {
-							text: (event.target as HTMLTextAreaElement).value,
-						})}
-					.value=${text}
-					placeholder="Text"
-				></textarea>
-			</div>
-		`;
 
 export const column = (
 	projectId: string,

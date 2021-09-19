@@ -1,0 +1,27 @@
+.cell-block {
+	padding: 0.5rem;
+	background-color: var(--white-color);
+	border-radius: 5px;
+}
+
+.cell-block:not(:last-child) {
+	margin-bottom: 1rem;
+}
+
+.task-field {
+	width: 100%;
+	font-size: inherit;
+	font-family: inherit;
+	border: none;
+	background-color: transparent;
+}
+
+.task-title {
+	font-weight: 600;
+	font-size: 1.1rem;
+}
+
+.task-text {
+	height: 5rem;
+	resize: none;
+}
