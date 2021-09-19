@@ -1,25 +1,19 @@
-import {
-	html,
-	lazy,
-	render,
-	router,
-	Computed,
-	Fragment,
-} from '@prostory/edelweiss';
+import { html, lazy, render, router, Fragment } from '@prostory/edelweiss';
 
 import { main } from './scenes/main';
 import { stats } from './scenes/stats';
 import { sidebar } from './scenes/components/sidebar';
+import { loading } from './scenes/components/loading';
 import { calendar } from './scenes/calendar';
 
-const projects = lazy<Computed<Fragment>>(
+const projects = lazy<Fragment>(
 	() =>
 		import('./scenes/projects').then(
 			({ projects }) =>
 				// Explicitly mimic long loading for an example.
 				new Promise((resolve) => setTimeout(() => resolve(projects), 500)),
 		),
-	() => '',
+	'',
 );
 
 const app = html`
@@ -36,9 +30,7 @@ const app = html`
 			},
 			{
 				pattern: '/projects',
-				// Eta abstraction is needed if we don't want to cache a whole page.
-				template: () =>
-					projects.loading() ? html`<p>Loading...</p>` : projects()(),
+				template: () => (projects.loading() ? loading : projects()),
 			},
 			{
 				pattern: '/',

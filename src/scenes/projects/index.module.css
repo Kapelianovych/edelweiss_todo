@@ -11,45 +11,6 @@
 	padding: 1.5rem 2rem;
 }
 
-.search-project-wrapper {
-	position: relative;
-}
-
-.search-field {
-	background-color: transparent;
-	font-size: inherit;
-	border: none;
-}
-
-.search-results-block {
-	position: absolute;
-	top: calc(100% + 0.5rem);
-	left: 0;
-	width: 100%;
-	visibility: hidden;
-	opacity: 0;
-	padding: 0.4rem 0.6rem;
-	background-color: var(--primary-color);
-	border-radius: 5px;
-}
-
-.search-results-block.visible {
-	visibility: visible;
-	opacity: 1;
-}
-
-.search-result-item {
-	display: inline-block;
-	padding: 0.2rem 0.6rem;
-	margin: 0 0.5rem 0.5rem 0;
-	background-color: var(--third-color);
-	color: var(--secondary-color);
-	border: none;
-	font-size: inherit;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
 .create-project-button {
 	background-color: transparent;
 	border: none;
@@ -71,4 +32,13 @@
 .default-message {
 	color: var(--fifth-color);
 	text-align: center;
+}
+
+.project-button {
+	font-size: inherit;
+	font-family: inherit;
+	background-color: transparent;
+	color: var(--black-color);
+	border: none;
+	cursor: pointer;
 }

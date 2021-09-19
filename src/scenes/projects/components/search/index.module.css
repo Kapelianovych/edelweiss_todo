@@ -1,0 +1,31 @@
+.search-project-wrapper {
+	display: flex;
+	align-items: center;
+	flex: 1;
+}
+
+.search-field {
+	background-color: transparent;
+	font-size: inherit;
+	border: none;
+	border-right: 1px solid var(--third-color);
+	width: 10rem;
+	margin-right: 0.5rem;
+}
+
+.search-results-block {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	max-width: 20rem;
+}
+
+.search-result-item {
+	display: inline-block;
+	color: var(--third-color);
+	border: none;
+	font-size: inherit;
+	font-family: inherit;
+	background-color: transparent;
+	cursor: pointer;
+}

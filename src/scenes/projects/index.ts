@@ -1,115 +1,80 @@
 import { data, effect, html, untrack } from '@prostory/edelweiss';
 
+import { search } from './components/search';
 import { kanban } from './components/kanban';
 import { creation } from './components/creation';
 import { AppState, appStore, Project } from '../../store';
 
 import styles from './index.module.css';
 
-export const projects = () => {
-	const appState = data(appStore.state);
-	const projectsData = data(appStore.projects);
-	const searchProject = data('');
-	const chosenProject = data<Project | null>(null);
-	const searchedProjects = data<readonly Project[]>([]);
+const appState = data(appStore.state);
+const projectsData = data(appStore.projects);
+const chosenProject = data(appStore.currentProject);
 
-	const unsubscribeFromState = appStore.on('state')(appState);
-	const unsubscribeFromProject = appStore.on('projects')(projectsData);
+appStore.on('state')(appState);
+appStore.on('projects')(projectsData);
+appStore.on('currentProject')(chosenProject);
 
-	const projectToButton = (project: Project) =>
-		html`
-			<button
-				class="${styles['search-result-item']}"
-				@click=${() => {
-					chosenProject(project);
-					searchProject('');
-					appStore.state = AppState.USING;
-				}}
-			>
-				${project.name}
-			</button>
-		`;
-
-	effect(() => {
-		const projectsList = projectsData();
-		const currentProject = untrack(chosenProject);
-
-		if (currentProject !== null) {
-			chosenProject(
-				projectsList.find(({ id }) => id === currentProject.id) ?? null,
-			);
-		}
-	});
-
-	effect(() =>
-		searchedProjects(
-			projectsData().filter((project) =>
-				project.name.toLowerCase().includes(searchProject().toLowerCase()),
-			),
-		),
-	);
-
-	return html`
-		<div
-			:will-unmount=${() => {
-				unsubscribeFromState();
-				unsubscribeFromProject();
+const projectToButton = (project: Project) =>
+	html`
+		<button
+			class="${styles['project-button']}"
+			@click=${() => {
+				chosenProject(project);
+				appStore.state = AppState.USING;
 			}}
-			class="${styles['main-section']}"
 		>
-			<header class="${styles['projects-header']}">
-				<div class="${styles['search-project-wrapper']}">
-					<input
-						type="search"
-						.value=${searchProject}
-						placeholder="Search"
-						class="${styles['search-field']}"
-						@input=${(event: InputEvent) =>
-							searchProject((event.target as HTMLInputElement).value)}
-					/>
-					<div
-						class="${styles['search-results-block']} ${() =>
-							searchProject().length > 0 && searchedProjects().length > 0
-								? styles['visible']
-								: ''}"
-					>
-						${() => searchedProjects().map(projectToButton)}
-					</div>
-				</div>
+			${project.name}
+		</button>
+	`;
 
-				<button
-					class="${styles['create-project-button']}"
-					@click=${() => (appStore.state = AppState.CREATION)}
-				>
-					Create
-				</button>
-			</header>
-			<main>
-				${() => {
-					const state = appState();
-					const projects = projectsData();
-					const currentProject = chosenProject();
+effect(() => {
+	const projectsList = projectsData();
+	const currentProject = untrack(chosenProject);
 
-					return state === AppState.CREATION
-						? creation
-						: projects.length > 0
-						? currentProject !== null
-							? kanban(currentProject)
-							: html`
-									<p class="${styles['default-message']}">
-										Choose existing project or create one.
-									</p>
-									<div class="${styles['projects-list']}">
-										${projects.map(projectToButton)}
-									</div>
-							  `
+	if (currentProject !== null) {
+		chosenProject(
+			projectsList.find(({ id }) => id === currentProject.id) ?? null,
+		);
+	}
+});
+
+export const projects = html`
+	<div class="${styles['main-section']}">
+		<header class="${styles['projects-header']}">
+			${search}
+			<button
+				class="${styles['create-project-button']}"
+				@click=${() => (appStore.state = AppState.CREATION)}
+			>
+				Create
+			</button>
+		</header>
+		<main>
+			${() => {
+				const state = appState();
+				const projects = projectsData();
+				const currentProject = chosenProject();
+
+				return state === AppState.CREATION
+					? creation
+					: projects.length > 0
+					? currentProject !== null
+						? kanban(currentProject)
 						: html`
 								<p class="${styles['default-message']}">
-									There aren't any projects yet.
+									Choose existing project or create one.
 								</p>
-						  `;
-				}}
-			</main>
-		</div>
-	`;
-};
+								<div class="${styles['projects-list']}">
+									${projects.map(projectToButton)}
+								</div>
+						  `
+					: html`
+							<p class="${styles['default-message']}">
+								There aren't any projects yet.
+							</p>
+					  `;
+			}}
+		</main>
+	</div>
+`;

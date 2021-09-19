@@ -29,6 +29,7 @@ export enum AppState {
 export interface AppStore {
 	state: AppState;
 	projects: readonly Project[];
+	currentProject: Project | null;
 }
 
 export const appStore = store<AppStore>({
@@ -36,7 +37,7 @@ export const appStore = store<AppStore>({
 	projects: [
 		{
 			id: 'test',
-			name: 'test',
+			name: 'Web Studio',
 			tasks: [
 				{
 					id: 'task1',
@@ -59,6 +60,7 @@ export const appStore = store<AppStore>({
 			],
 		},
 	],
+	currentProject: null,
 });
 
 export const createToDo = (projectId: string, state: ToDoState) =>
