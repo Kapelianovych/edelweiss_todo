@@ -11,7 +11,14 @@ export const cell =
 		const titleEditable = data(title === '');
 
 		return html`
-			<div class="${styles['cell-block']}">
+			<div
+				draggable="true"
+				@dragstart=${(event: DragEvent) => {
+					event.dataTransfer!.effectAllowed = 'move';
+					event.dataTransfer!.setData('text/plain', id);
+				}}
+				class="${styles['cell-block']}"
+			>
 				<input
 					class="${styles['task-field']} ${styles['task-title']}"
 					@dblclick=${() => titleEditable(true)}

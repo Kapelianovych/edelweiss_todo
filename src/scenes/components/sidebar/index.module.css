@@ -14,6 +14,7 @@
 	display: block;
 	font-size: 1rem;
 	margin-bottom: 2rem;
+	text-decoration: none;
 }
 
 .links-block route-link {
@@ -21,6 +22,7 @@
 	justify-content: space-between;
 	color: var(--fifth-color);
 	transition: color 0.2s;
+	text-decoration: none;
 }
 
 .links-block route-link:not(:last-child) {

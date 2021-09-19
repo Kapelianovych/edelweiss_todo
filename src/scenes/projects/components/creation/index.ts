@@ -31,8 +31,10 @@ export const creation = html`
 			<button
 				class="${styles['creation-button']}"
 				@click=${() => {
-					createProject(name());
-					appStore.state = AppState.USING;
+					if (name().length > 0) {
+						createProject(name());
+						appStore.state = AppState.USING;
+					}
 				}}
 			>
 				Ok

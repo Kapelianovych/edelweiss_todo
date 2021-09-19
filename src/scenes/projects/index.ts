@@ -99,6 +99,9 @@ export const projects = () => {
 									<p class="${styles['default-message']}">
 										Choose existing project or create one.
 									</p>
+									<div class="${styles['projects-list']}">
+										${projects.map(projectToButton)}
+									</div>
 							  `
 						: html`
 								<p class="${styles['default-message']}">

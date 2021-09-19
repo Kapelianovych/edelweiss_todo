@@ -1,7 +1,12 @@
 import { html } from '@prostory/edelweiss';
 
 import { cell } from './components/cell';
-import { ToDo, ToDoState, createToDo } from '../../../../../../store';
+import {
+	ToDo,
+	ToDoState,
+	createToDo,
+	updateToDo,
+} from '../../../../../../store';
 
 import styles from './index.module.css';
 
@@ -27,6 +32,20 @@ export const column = (
 					+
 				</button>
 			</header>
-			<div>${tasks.map(cell(projectId))}</div>
+			<div
+				class="${styles['column-tasks']}"
+				@drop=${(event: DragEvent) => {
+					event.preventDefault();
+					updateToDo(projectId, event.dataTransfer!.getData('text/plain'), {
+						state: type,
+					});
+				}}
+				@dragover=${(event: DragEvent) => {
+					event.preventDefault();
+					event.dataTransfer!.dropEffect = 'move';
+				}}
+			>
+				${tasks.map(cell(projectId))}
+			</div>
 		</div>
 	`;

@@ -1,15 +1,16 @@
 .column-block {
-	padding: 0 1rem 1rem 1rem;
-	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 15px;
 	background-color: var(--primary-color);
 }
 
 .column-header {
-	padding-top: 1rem;
-	margin: 0 0 1rem 0;
+	padding: 1rem 1rem 0 1rem;
 	position: sticky;
 	top: 0;
 	background-color: inherit;
+	border-radius: 15px;
 }
 
 .column-top-line {
@@ -42,6 +43,10 @@
 	font-family: inherit;
 	color: var(--third-color);
 	border-radius: 5px;
-	margin-bottom: 1rem;
 	cursor: pointer;
+}
+
+.column-tasks {
+	flex: 1;
+	padding: 1rem;
 }

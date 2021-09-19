@@ -17,6 +17,7 @@
 }
 
 .creation-button {
+	padding: 0.4rem 0.8rem;
 	border: none;
 	background-color: var(--primary-color);
 	color: rgb(var(--fifth-alpha-color) / 0.7);

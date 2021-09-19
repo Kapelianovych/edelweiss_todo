@@ -25,7 +25,7 @@
 	position: absolute;
 	top: calc(100% + 0.5rem);
 	left: 0;
-	width: 30rem;
+	width: 100%;
 	visibility: hidden;
 	opacity: 0;
 	padding: 0.4rem 0.6rem;
@@ -39,6 +39,9 @@
 }
 
 .search-result-item {
+	display: inline-block;
+	padding: 0.2rem 0.6rem;
+	margin: 0 0.5rem 0.5rem 0;
 	background-color: var(--third-color);
 	color: var(--secondary-color);
 	border: none;
@@ -59,6 +62,10 @@
 
 .create-project-button:hover {
 	color: var(--fifth-color);
+}
+
+.projects-list {
+	margin: 2rem;
 }
 
 .default-message {
