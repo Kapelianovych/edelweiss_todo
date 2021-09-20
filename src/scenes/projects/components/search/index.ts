@@ -4,6 +4,14 @@ import { appStore, Project } from '../../../../store';
 
 import styles from './index.module.css';
 
+globalThis.addEventListener('click', (event) => {
+	if (
+		!(event.target as HTMLElement).classList.contains(styles['search-field'])
+	) {
+		searchValue('');
+	}
+});
+
 const searchedProjects = data<readonly Project[]>([]);
 const searchValue = data('');
 
